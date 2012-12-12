@@ -1,23 +1,30 @@
 #!/usr/bin/env python
 
+import random
+import unittest
 from stats.sample import ReservoirSample
 
-N = 3
-n = 15
+class TestSample(unittest.TestCase):
 
-s = ReservoirSample(N)
-for i in range(n):
-  s.add(i)
-for i in s:
-  assert(i >=0 and i <n)
+  def testsample(self):
+    N = 3
+    n = 15
 
-assert(N == s.sample_size() )
-assert(n == s.num_added() )
-assert(N == len(s.data) )
+    s = ReservoirSample(N)
+    for i in range(n):
+      s.add(i)
+    for i in s:
+      self.assertTrue(i >=0 and i <n)
 
-N = 5
-n = 5
-s = ReservoirSample(N)
-for i in range(n):
-  s.add(i)
+    self.assertTrue(N == s.sample_size() )
+    self.assertTrue(n == s.num_added() )
+    self.assertTrue(N == len(s.data) )
 
+    N = 5
+    n = 5
+    s = ReservoirSample(N)
+    for i in range(n):
+      s.add(i)
+
+if __name__ == '__main__':
+  unittest.main()
