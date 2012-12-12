@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import sys
+import os
+import argparse
+import sample
+
+parser = argparse.ArgumentParser(description = 'Produces a representative sample from a stream of undetermined length.')
+parser.add_argument('--size', type=int, dest='sampleSize', action='store', required=True, help='sample of size')
+parser.add_argument('files', nargs='*', default=['/dev/stdin'], help='list of files to read. If no files are specified, reads from stdin')
+args = parser.parse_args()
+
+s = sample.ReservoirSample(args.sampleSize)
+
+for path in args.files:
+  fd = open(path, 'r') or next
+  for line in fd.xreadlines():
+    s.add(line)
+  fd.close()
+for line in s:
+  sys.stdout.write(line)
+
