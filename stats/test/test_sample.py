@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import sample
+from stats.sample import ReservoirSample
 
 N = 3
 n = 15
 
-s = sample.ReservoirSample(N)
+s = ReservoirSample(N)
 for i in range(n):
   s.add(i)
 for i in s:
@@ -17,7 +17,7 @@ assert(N == len(s.data) )
 
 N = 5
 n = 5
-s = sample.ReservoirSample(N)
+s = ReservoirSample(N)
 for i in range(n):
   s.add(i)
 
