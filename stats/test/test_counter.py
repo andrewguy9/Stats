@@ -16,27 +16,27 @@ class TestCounters(unittest.TestCase):
   def testCumlativeMovingAverage(self):
     tot = counter.CumlativeMovingAverage()
     for t,v in self.data:
-      tot.update(v)
+      tot(v)
     self.assertTrue(abs(tot.get()-.5)<.02)
 
   def testExponentialMovingAverage(self):
     avg = counter.ExponentialMovingAverage()
     for t,v in self.data:
-      avg.update(v, 1.0/5000.0)
+      avg(v, 1.0/5000.0)
     self.assertTrue(abs(avg.get()-.5)<.02)
 
   def testMovingAverage(self):
     t = 0
     aot = counter.MovingAverage(5000.0,lambda: t)
     for t,v in self.data:
-      aot.update(v)
+      aot(v)
     self.assertTrue(abs(aot.get()-.5)<.02)
 
   def testMovingRate(self):
     t = 0
     rat = counter.MovingRate(5000.0, lambda: t)
     for t,v in self.data:
-      rat.update(v)
+      rat(v)
     self.assertTrue(abs(rat.get()/5000-.5)<.02)
 
 if __name__ == '__main__':

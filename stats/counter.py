@@ -8,7 +8,7 @@ class CumlativeMovingAverage:
     self.n = 0.0
     self.total = 0.0
 
-  def update(self, value):
+  def __call__(self, value):
     self.n += 1
     self.total += value
     return self.get()
@@ -27,7 +27,7 @@ class ExponentialMovingAverage:
   def __init__(self):
     self.s = 0.0
  
-  def update(self, y, alpha):
+  def __call__(self, y, alpha):
     self.s = alpha * y + (1-alpha)*self.s
     return self.s
 
@@ -47,12 +47,12 @@ class MovingAverage:
     self.t_last = self.ts()
     self.avg = ExponentialMovingAverage()
 
-  def update(self, value):
+  def __call__(self, value):
     t_now = self.ts()
     delta = t_now - self.t_last
     self.t_last = t_now
     alpha = 1-math.exp(-delta/self.w)
-    return self.avg.update(value, alpha)
+    return self.avg(value, alpha)
 
   def get(self):
     return self.avg.get()
@@ -65,7 +65,7 @@ class MovingRate:
     self.t_last = self.ts()
     self.rate = 0
 
-  def update(self, count):
+  def __call__(self, count):
     t_now = self.ts()
     delta = t_now - self.t_last
     self.t_last = t_now
@@ -74,4 +74,4 @@ class MovingRate:
     return self.rate
 
   def get(self):
-    return self.update(0)
+    return self(0)
