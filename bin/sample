@@ -13,10 +13,13 @@ args = parser.parse_args()
 s = ReservoirSample(args.sampleSize)
 
 for path in args.files:
-  fd = open(path, 'r') or next
-  for line in fd.xreadlines():
-    s.add(line)
-  fd.close()
+  try:
+    with open(path, 'r') as fd:
+      for line in fd.xreadlines():
+        s.add(line)
+  except Exception as e:
+      print >>sys.stderr, e
+
 for line in s:
   sys.stdout.write(line)
 
