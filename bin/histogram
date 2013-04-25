@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+# Consumes a stream of bucket, value pairs and produces a histogram.
+
+import argparse
+
+parser = argparse.ArgumentParser(description = 'Prints a histogram in the terminal')
+parser.add_argument('--symbols', dest='symbols', type=str, default='*+#@', help='Symbols to use when graphing lines')
+parser.add_argument('--max', dest='max_value', type=float, required=True, help='Upper bound on the histogram.')
+parser.add_argument('--width', dest='width', type=int, required=True, help='Width of the screen')
+parser.add_argument('files', nargs='*', default=['/dev/stdin'], help='list of files to read. If no files are specified, reads from stdin')
+
+def print_line(line, symbols, max_value, width):
+    tokens = line.split()
+    bucket = tokens[0]
+    fields = tokens[1:]
+    normalized = map(lambda x: int(min(max_value, width * (float(x) / max_value))), fields)
+    field_symbols = zip(normalized, symbols)
+    ordered = sorted(field_symbols)
+    index = 0
+    result = ""
+    for (field, symbol) in ordered:
+        padding = field - index - 1
+        if padding > 0:
+            result += " "*padding + symbol
+            index += padding + 1
+        elif padding == 0:
+            result += symbol
+            index += 1
+    print bucket, result
+
+def main():
+    args = parser.parse_args()
+    for path in args.files:
+        with open(path, 'r') as f:
+            for line in f.readlines():
+                print_line(line, args.symbols, args.max_value, args.width)
+
+if __name__ == "__main__":
+    main()
