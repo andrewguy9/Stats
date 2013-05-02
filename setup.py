@@ -13,6 +13,4 @@ setup(
     license='LICENSE.txt',
     description='Tools for capturing samples and counts',
     long_description=open('README.txt').read(),
-    install_requires=[
-    ],
 )
