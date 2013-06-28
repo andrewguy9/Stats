@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import random
 import unittest
 from stats.sample import ReservoirSample
 
