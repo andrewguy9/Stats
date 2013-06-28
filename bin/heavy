@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import sys
+import argparse
+from stats.heavy_hitters import HeavyHitters
+
+parser = argparse.ArgumentParser(description = 'Finds the top N occuring colors, from a straem of weight, color pairs')
+parser.add_argument('-n', type=int, dest='N', action='store', required=True, help='How many values to find')
+parser.add_argument('files', nargs='*', default=['/dev/stdin'], help='list of files to read. If no files are specified, reads from stdin')
+args = parser.parse_args()
+
+h = HeavyHitters(args.N)
+
+for path in args.files:
+    try:
+        with open(path, 'r') as fd:
+            for line in fd.xreadlines():
+                color,weight = line.split()
+                h.update(color, int(weight))
+    except Exception as e:
+        print >>sys.stderr, e
+
+for (weight, color) in h.summery():
+    print color, weight
