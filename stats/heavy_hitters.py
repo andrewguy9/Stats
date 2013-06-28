@@ -23,6 +23,10 @@ class HeavyHitters:
         self.wc.append(wc2)
         self.wc.sort()
 
+    def merge(self, hh):
+        for (w, c) in hh.summery():
+            self.update(c, w)
+
     def summery(self):
         return self.wc
 
