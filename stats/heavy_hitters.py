@@ -21,7 +21,7 @@ class HeavyHitters:
 
         self.c_to_wc[c] = wc2
         self.wc.append(wc2)
-        self.wc.sort()
+        self.wc.sort(reverse=True)
 
     def merge(self, hh):
         for (w, c) in hh.summery():
