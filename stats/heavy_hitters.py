@@ -15,7 +15,7 @@ class HeavyHitters:
             if len(self.wc) < self.N:
                 wc2 = (v,c)
             else:
-                wc = self.wc.pop(0)
+                wc = self.wc.pop()
                 self.c_to_wc.pop(wc[1])
                 wc2 = (wc[0]+v, c)
 
