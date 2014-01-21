@@ -2,16 +2,22 @@
 
 import math
 
+class Cumlative:
+    def __init__(self):
+        self.total = 0
+
+    def __call__(self, value=None):
+        if value is not None:
+            self.total+=value
+        return self.total
+
 class CumlativeMovingAverage:
   def __init__(self):
-    self.n = 0.0
-    self.total = 0.0
+    self.n = Cumlative()
+    self.total = Cumlative()
 
   def __call__(self, value=None):
-    if value is not None:
-      self.n += 1
-      self.total += value
-    return self.total / self.n
+      return self.total(value) / self.n(1)
 
 # Exponentially moving average: Returns a moving average where a given data point has
 # less and less impact on the current value as new points come in.
