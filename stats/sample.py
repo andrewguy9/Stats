@@ -12,9 +12,9 @@ class ReservoirSample:
     if self.n < self.N:
       self.data.append(value)
     else:
-      r = random.randint(0,self.N-1)
-      if r < len(self.data):
-	self.data[r] = value
+      r = random.randint(0,self.n-1)
+      if r < self.N:
+        self.data[r] = value
     self.n+=1
 
   def __iter__(self):
